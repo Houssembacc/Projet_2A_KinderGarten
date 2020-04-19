@@ -19,6 +19,10 @@ public:
     QSqlQueryModel * afficher(); // afficher
     bool supprimer(QString); // supprimer
     bool update();
+    QSqlQueryModel *chercher(const QString &);
+    QSqlQueryModel * trier_type();
+    QSqlQueryModel * trier_qte();
+    QSqlQueryModel * trier_nom();
 private:
     QString id,nom,type;
     int qte;

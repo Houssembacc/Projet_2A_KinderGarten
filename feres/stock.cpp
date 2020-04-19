@@ -85,6 +85,49 @@ bool stock::update()
     return query.exec();
 }
 
+QSqlQueryModel *stock::chercher(const QString &c)
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+    model->setQuery("select * from STOCK where NOM LIKE '"+c+"%'");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOM"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("QUANTITE"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("TYPE"));
+    return model;
+}
 
+QSqlQueryModel * stock::trier_type()
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+    model->setQuery("SELECT * FROM STOCK ORDER BY TYPE ASC");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOM"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("QUANTITE"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("TYPE"));
+    return model;
 
+}
 
+QSqlQueryModel * stock::trier_qte()
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+    model->setQuery("SELECT * FROM STOCK ORDER BY QUANTITE ASC");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOM"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("QUANTITE"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("TYPE"));
+    return model;
+
+}
+
+QSqlQueryModel * stock::trier_nom()
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+    model->setQuery("SELECT * FROM STOCK ORDER BY NOM ASC");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOM"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("QUANTITE"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("TYPE"));
+    return model;
+
+}

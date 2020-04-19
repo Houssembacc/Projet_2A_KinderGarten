@@ -230,7 +230,6 @@ void MainWindow::on_pushButton_ajouter_eleve_clicked()
 
 }
 
-
 void MainWindow::on_pb_supprimer_eleve_clicked()
 {
     int id = ui->comboBox->currentText().toInt();
@@ -249,8 +248,6 @@ void MainWindow::on_pb_supprimer_eleve_clicked()
                     QObject::tr("Erreur !.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);
 }
-
-
 
 void MainWindow::on_pb_modifier_eleve_clicked()
 {
@@ -274,17 +271,17 @@ void MainWindow::on_pb_modifier_eleve_clicked()
   Eleve e(id,nom,prenom,adresse,date_naissance,sexe,reference);
   bool test=e.update();
   if(test)
-{
+    {
       ui->tabeleve->setModel(tmpetudiant.afficher());
       ui->tab_modifier->setModel(tmpetudiant.afficher());
       ui->tab_eleve_supp->setModel(tmpetudiant.afficher());//refresh
 
 
-QMessageBox::information(nullptr, QObject::tr("modifier un employe"),
+        QMessageBox::information(nullptr, QObject::tr("modifier un employe"),
                   QObject::tr("employe modifie.\n"
                               "Click Cancel to exit."), QMessageBox::Cancel);
 
-}
+    }
   else
       QMessageBox::critical(nullptr, QObject::tr("modifier un employe"),
                   QObject::tr("Erreur !.\n"
@@ -295,12 +292,11 @@ QMessageBox::information(nullptr, QObject::tr("modifier un employe"),
 
 void MainWindow::on_tab_modifier_activated(const QModelIndex &index)
 {
-
     QString val=ui->tab_modifier->model()->data(index).toString();
-        QSqlQuery q;
-        q.prepare("select * from TABLE1 where ID='"+val+"'");
-        if(q.exec())
-        {
+    QSqlQuery q;
+    q.prepare("select * from TABLE1 where ID='"+val+"'");
+    if(q.exec())
+    {
             while (q.next())
             {
             ui->ID_modif_label->setText(q.value(0).toString());
@@ -315,7 +311,7 @@ void MainWindow::on_tab_modifier_activated(const QModelIndex &index)
             }
             else
                 ui->radioButton_feminen_5->setChecked(1);
-        }
+            }
             //combobox ajouter eleve
             QSqlQueryModel *modele = new QSqlQueryModel();
             QSqlQuery q;
@@ -323,10 +319,8 @@ void MainWindow::on_tab_modifier_activated(const QModelIndex &index)
             q.exec();
             modele->setQuery(q);
             ui->combo_modifier_eleve->setModel(modele);
+    }
 }
-}
-
-
 
 void MainWindow::on_tab_widget_tabBarClicked()
 {
@@ -689,9 +683,6 @@ void MainWindow::on_trier_classe_clicked()
     }
 }
 
-
-
-
 void MainWindow::on_lineEdit_rechercher_type_classe_textChanged(const QString &arg1)
 {
     QString str=ui->lineEdit_rechercher_type_classe->text();
@@ -715,7 +706,7 @@ void MainWindow::on_pb_imprimer_clicked()
 
     QPdfWriter pdf("C:/Users/file.pdf");
     QPainter painter(&pdf);
-    painter.setPen(Qt::blue);
+    //painter.setPen(Qt::bl ue);
     painter.drawText(100,600,"Houssembaccouche");
 
     QString id =ui->line_pdf->text();
@@ -780,25 +771,67 @@ void MainWindow::on_G_nourriture_clicked()
 {
     ui->stackedWidget->setCurrentIndex(5);
     ui->tablemenu->setModel(tmpfood.afficher());
+    ui->tab_menu_supp->setModel(tmpfood.afficher());
+    ui->tab_modifier_menu->setModel(tmpfood.afficher());
     ui->tablestock->setModel(tmpstock.afficher());
+    ui->tab_aliment_supp->setModel(tmpstock.afficher());
+    ui->tab_modifier_stock->setModel(tmpstock.afficher());
+
 }
 
-void MainWindow::on_pushButton_modifier_2_clicked()
+void MainWindow::on_pushButton_modifier_2_clicked()//ajouttt
 {
     int id = ui->id_label_1->text().toInt();
-    //int reference= ui->combobox_ajouter->currentText().toInt();
     QString entree= ui->entree_label->text();
-    QString plat= ui->plat_label->text();
+    QString plat= ui->kouskous->text();
     QString dessert= ui->dessert_label->text();
-    QString Jour= ui->Jour_label->text();
+    QString Jour="lundi";
+    if(ui->kouskous->isChecked())
+    {
+        plat= ui->kouskous->text();
+    }
+    else if(ui->pates->isChecked())
+    {
+        plat= ui->pates->text();
+    }
+    else if(ui->loubia->isChecked())
+    {
+          plat= ui->loubia->text();
+    }
+    else if(ui->jelbena->isChecked())
+    {
+          plat= ui->jelbena->text();
+    }
 
-        food f(entree,plat,dessert,Jour,id); // appel au contructeur paramétré...
+    else if(ui->riz->isChecked())
+    {
+          plat= ui->riz->text();
+    }
+
+    if(ui->comboBox_2->currentText() == "lundi")
+    {
+        Jour="lundi";
+    }
+    else if(ui->comboBox_2->currentText() == "mardi")
+    {
+        Jour="mardi";
+    }
+    else if(ui->comboBox_2->currentText() == "mercredi")
+    {
+        Jour="mercredi";
+    }
+    else if(ui->comboBox_2->currentText() == "jeudi")
+    {
+        Jour="jeudi";
+    }
+    else if(ui->comboBox_2->currentText() == "vendredi")
+    {
+        Jour="vendredi";
+    }
+    food f(id,entree,plat,dessert,Jour); // appel au contructeur paramétré...
         bool test=f.ajouter();
         if(test)
-        {//ui->tabeleve->setModel(tmpetudiant.afficher());//refresh
-         //ui->tab_eleve_supp->setModel(tmpetudiant.afficher());//refresh
-         //ui->tab_modifier->setModel(tmpetudiant.afficher());//refresh
-
+        {
         QMessageBox::information(nullptr, QObject::tr("Ajouter un menu"),
                           QObject::tr("menu ajouté.\n"
                                       "Click Cancel to exit."), QMessageBox::Cancel);
@@ -819,9 +852,7 @@ void MainWindow::on_menu_supprimer_clicked()
     QString jour = ui->jour_supprimer->text();
     bool test=tmpfood.supprimer(jour);
     if(test)
-    {//ui->tabeleve->setModel(tmpetudiant.afficher());//refresh
-     //ui->tab_eleve_supp->setModel(tmpetudiant.afficher());//refresh
-     //ui->tab_modifier->setModel(tmpetudiant.afficher());//refresh
+    {
         QMessageBox::information(nullptr, QObject::tr("Supprimer un menu"),
                     QObject::tr("menu supprimé.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);
@@ -857,10 +888,7 @@ void MainWindow::on_ajouter_clicked()
         stock s(id,nom,type,qte); // appel au contructeur paramétré...
         bool test=s.ajouter();
         if(test)
-        {//ui->tabeleve->setModel(tmpetudiant.afficher());//refresh
-         //ui->tab_eleve_supp->setModel(tmpetudiant.afficher());//refresh
-         //ui->tab_modifier->setModel(tmpetudiant.afficher());//refresh
-
+        {
         QMessageBox::information(nullptr, QObject::tr("Ajouter un menu"),
                           QObject::tr("menu ajouté.\n"
                                       "Click Cancel to exit."), QMessageBox::Cancel);
@@ -907,12 +935,54 @@ void MainWindow::on_pushButton_modifier_5_clicked()
 {
         int id = ui->id_label_2->text().toInt();
         QString entree= ui->entree_label_2->text();
-        QString plat= ui->plat_label_2->text();
+        QString plat= ui->kouskous_2->text();
         QString dessert= ui->dessert_label_2->text();
-        QString Jour= ui->Jour_label_2->text();
-        /*food f(entree,plat,dessert,Jour,id); // appel au contructeur paramétré...
-        bool test=f.modifier();*/
-        food f(entree,plat,dessert,Jour,id); // appel au contructeur paramétré...
+        QString Jour="lundi";
+
+        if(ui->kouskous_2->isChecked())
+            {
+                plat= ui->kouskous_2->text();
+            }
+            else if(ui->pates_2->isChecked())
+            {
+                plat= ui->pates_2->text();
+            }
+            else if(ui->loubia_2->isChecked())
+            {
+                  plat= ui->loubia_2->text();
+            }
+            else if(ui->jelbena_2->isChecked())
+            {
+                  plat= ui->jelbena_2->text();
+            }
+
+            else if(ui->riz_2->isChecked())
+            {
+                  plat= ui->riz_2->text();
+            }
+
+        if(ui->comboBox_3->currentText() == "lundi")
+            {
+                Jour="lundi";
+            }
+            else if(ui->comboBox_3->currentText() == "mardi")
+            {
+                Jour="mardi";
+            }
+            else if(ui->comboBox_3->currentText() == "mercredi")
+            {
+                Jour="mercredi";
+            }
+            else if(ui->comboBox_3->currentText() == "jeudi")
+            {
+                Jour="jeudi";
+            }
+            else if(ui->comboBox_3->currentText() == "vendredi")
+            {
+                Jour="vendredi";
+            }
+
+        food f(id,entree,plat,dessert,Jour);// appel au contructeur paramétré...
         bool test=f.update();
         if(test)
 
@@ -988,4 +1058,216 @@ void MainWindow::on_pb_affficher_5_clicked()
         ui->tablemenu->setModel(tmpfood.trier_jour());
     }
 
+}
+
+void MainWindow::on_pb_affficher_6_clicked()
+{
+    if(ui->combobox_trie_3->currentText() == "Type")
+    {
+        ui->tablestock->setModel(tmpstock.trier_type());
+    }
+    if(ui->combobox_trie_3->currentText() == "Nom")
+    {
+        ui->tablestock->setModel(tmpstock.trier_nom());
+    }
+    if(ui->combobox_trie_3->currentText() == "Quantite")
+    {
+        ui->tablestock->setModel(tmpstock.trier_qte());
+    }
+}
+
+void MainWindow::on_pushButton_8_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+void MainWindow::on_lineEdit_chercher_stock_textChanged(const QString &arg1)
+{
+    QString str=ui->lineEdit_chercher_stock->text();
+    ui->tablestock->setModel(tmpstock.chercher(str));
+}
+
+void MainWindow::on_lineEdit_chercher_menu_textChanged(const QString &arg1)
+{
+    QString str=ui->lineEdit_chercher_menu->text();
+    ui->tablemenu->setModel(tmpfood.chercher(str));
+}
+
+
+//controle de saisie
+void MainWindow::on_id_label_1_cursorPositionChanged(int arg1, int arg2)
+{
+    QRegExp rx("^[0-9]*$");
+        QRegExpValidator  *validID = new QRegExpValidator(rx,this);
+        ui->id_label_1->setValidator(validID);
+}
+
+void MainWindow::on_ID_label_2_cursorPositionChanged(int arg1, int arg2)
+{
+    QRegExp rx("^[0-9]*$");
+        QRegExpValidator  *validID = new QRegExpValidator(rx,this);
+        ui->ID_label_2->setValidator(validID);
+}
+
+void MainWindow::on_id_stock_supprimer_cursorPositionChanged(int arg1, int arg2)
+{
+    QRegExp rx("^[0-9]*$");
+        QRegExpValidator  *validID = new QRegExpValidator(rx,this);
+        ui->id_stock_supprimer->setValidator(validID);
+}
+
+
+void MainWindow::on_ID_label_3_cursorPositionChanged(int arg1, int arg2)
+{
+    QRegExp rx("^[0-9]*$");
+        QRegExpValidator  *validID = new QRegExpValidator(rx,this);
+        ui->ID_label_3->setValidator(validID);
+}
+
+void MainWindow::on_id_label_2_cursorPositionChanged(int arg1, int arg2)
+{
+    QRegExp rx("^[0-9]*$");
+        QRegExpValidator  *validID = new QRegExpValidator(rx,this);
+        ui->id_label_2->setValidator(validID);
+}
+
+void MainWindow::on_entree_label_cursorPositionChanged(int arg1, int arg2)
+{
+    QRegExp rx("^[A-Za-z]*$");
+        QRegExpValidator  *validNOM = new QRegExpValidator(rx,this);
+        ui->entree_label->setValidator(validNOM);
+}
+
+void MainWindow::on_dessert_label_cursorPositionChanged(int arg1, int arg2)
+{
+    QRegExp rx("^[A-Za-z]*$");
+        QRegExpValidator  *validNOM = new QRegExpValidator(rx,this);
+        ui->dessert_label->setValidator(validNOM);
+}
+
+
+void MainWindow::on_tab_modifier_menu_activated(const QModelIndex &index)
+{
+    QString val=ui->tab_modifier_menu->model()->data(index).toString();
+        QSqlQuery f;
+        f.prepare("select * from MENU where ID='"+val+"'");
+        if(f.exec())
+        {
+                while (f.next())
+                {
+                ui->id_label_2->setText(f.value(0).toString());
+                ui->entree_label_2->setText(f.value(1).toString());
+                ui->dessert_label_2->setText(f.value(3).toString());
+                if(f.value(2).toString()=="kouskous")
+                    {
+                        ui->kouskous_2->setChecked(1);
+                    }
+                if(f.value(2)=="pates")
+                    {
+                        ui->pates_2->setChecked(1);
+                    }
+                if(f.value(2).toString()=="loubia")
+                    {
+                        ui->loubia_2->setChecked(1);
+                    }
+                if(f.value(2).toString()=="jelbena")
+                    {
+                        ui->jelbena_2->setChecked(1);
+                    }
+                if(f.value(2).toString()=="riz")
+                    {
+                        ui->riz_2->setChecked(1);
+                    }
+                if(f.value(4) == "lundi")
+                    {
+                    ui->comboBox_3->setCurrentText("lundi");
+                    }
+                if(f.value(4) == "mardi")
+                    {
+                    ui->comboBox_3->setCurrentText("mardi");
+                    }
+                if(f.value(4) == "mercredi")
+                    {
+                    ui->comboBox_3->setCurrentText("mercredi");
+                    }
+                if(f.value(4) == "jeudi")
+                    {
+                    ui->comboBox_3->setCurrentText("jeudi");
+                    }
+                if(f.value(4) == "vendredi")
+                    {
+                    ui->comboBox_3->setCurrentText("vendredi");
+                    }
+                }
+                QSqlQueryModel *modele = new QSqlQueryModel();
+                f.exec();
+                modele->setQuery(f);
+        }
+}
+
+void MainWindow::on_tab_menu_supp_activated(const QModelIndex &index)
+{
+    QString val=ui->tab_menu_supp->model()->data(index).toString();
+        QSqlQuery f;
+        f.prepare("select * from MENU where ID='"+val+"'");
+        if(f.exec())
+        {
+                while (f.next())
+                {
+                ui->jour_supprimer->setText(f.value(4).toString());
+                }
+                QSqlQueryModel *modele = new QSqlQueryModel();
+                f.exec();
+                modele->setQuery(f);
+        }
+}
+
+void MainWindow::on_tab_aliment_supp_activated(const QModelIndex &index)
+{
+    QString val=ui->tab_aliment_supp->model()->data(index).toString();
+        QSqlQuery a;
+        a.prepare("select * from STOCK where ID='"+val+"'");
+        if(a.exec())
+        {
+                while (a.next())
+                {
+                ui->id_stock_supprimer->setText(a.value(0).toString());
+                }
+                QSqlQueryModel *modele = new QSqlQueryModel();
+                a.exec();
+                modele->setQuery(a);
+        }
+}
+
+
+
+void MainWindow::on_tab_modifier_stock_activated(const QModelIndex &index)
+{
+    QString val=ui->tab_modifier_stock->model()->data(index).toString();
+        QSqlQuery a;
+        a.prepare("select * from STOCK where ID='"+val+"'");
+        if(a.exec())
+        {
+                while (a.next())
+                {
+                ui->ID_label_3->setText(a.value(0).toString());
+                ui->Nom_label_3->setText(a.value(1).toString());
+                ui->qte_label_2->setText(a.value(2).toString());
+                if(a.value(3).toString()=="gouter")
+                    {
+                        ui->gouter_2->setChecked(1);
+                    }
+                if(a.value(3)=="legumes")
+                    {
+                        ui->legumes_2->setChecked(1);
+                    }
+                if(a.value(3).toString()=="fruits")
+                    {
+                        ui->fruits_2->setChecked(1);
+                    }
+                }
+                QSqlQueryModel *modele = new QSqlQueryModel();
+                a.exec();
+                modele->setQuery(a);
+        }
 }

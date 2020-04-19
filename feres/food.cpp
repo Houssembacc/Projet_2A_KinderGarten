@@ -2,20 +2,20 @@
 
 food::food()
 {
+    id=0;
     entree="";
     principale="";
     dessert="";
     jour="";
-    id=0;
 }
 
-food::food(QString entree,QString principale,QString dessert,QString jour,int id) // constructeur parametré
+food::food(int id,QString entree,QString principale,QString dessert,QString jour) // constructeur parametré
 {
+    this->id=id;
     this->entree=entree;
     this->principale=principale;
     this->dessert=dessert;
     this->jour=jour;
-    this->id=id;
 }
 
 QString food::get_entree(){return entree;}
@@ -30,14 +30,14 @@ bool food::ajouter()
 {
 QSqlQuery query;
 QString res= QString::number(id);
-query.prepare("INSERT INTO MENU (ENTRÉE,PLAT_PRINCIPALE,DESSERT,Jour,ID) "
-                    "VALUES (:entree, :principale, :dessert, :jour, :id)");
+query.prepare("INSERT INTO MENU (ID,ENTRÉE,PLAT_PRINCIPALE,DESSERT,Jour) "
+                    "VALUES ( :id,:entree, :principale, :dessert, :jour)");
 
+query.bindValue(":id", res);
 query.bindValue(":entree", entree);
 query.bindValue(":principale", principale);
 query.bindValue(":dessert", dessert);
 query.bindValue(":jour", jour);
-query.bindValue(":id", res);
 return    query.exec();
 }
 
@@ -84,11 +84,11 @@ QSqlQueryModel * food::afficher()
 {QSqlQueryModel * model= new QSqlQueryModel();
 
 model->setQuery("select * from MENU");
-model->setHeaderData(0, Qt::Horizontal, QObject::tr("ENTRÉE"));
-model->setHeaderData(1, Qt::Horizontal, QObject::tr("PLAT_PRINCIPALE"));
-model->setHeaderData(2, Qt::Horizontal, QObject::tr("DESSERT"));
-model->setHeaderData(3, Qt::Horizontal, QObject::tr("Jour"));
-model->setHeaderData(4, Qt::Horizontal, QObject::tr("ID"));
+model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+model->setHeaderData(1, Qt::Horizontal, QObject::tr("ENTRÉE"));
+model->setHeaderData(2, Qt::Horizontal, QObject::tr("PLAT_PRINCIPALE"));
+model->setHeaderData(3, Qt::Horizontal, QObject::tr("DESSERT"));
+model->setHeaderData(4, Qt::Horizontal, QObject::tr("Jour"));
     return model;
 }
 
@@ -97,11 +97,11 @@ QSqlQueryModel * food::trier_id()
     QSqlQueryModel * model= new QSqlQueryModel();
     model->setQuery("SELECT * FROM MENU ORDER BY ID ASC");
 
-    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ENTRÉE"));
-    model->setHeaderData(1, Qt::Horizontal, QObject::tr("PLAT_PRINCIPALE"));
-    model->setHeaderData(2, Qt::Horizontal, QObject::tr("DESSERT"));
-    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Jour"));
-    model->setHeaderData(4, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("ENTRÉE"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("PLAT_PRINCIPALE"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("DESSERT"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Jour"));
 
     return model;
 }
@@ -111,11 +111,11 @@ QSqlQueryModel * food::trier_plat()
     QSqlQueryModel * model= new QSqlQueryModel();
     model->setQuery("SELECT * FROM MENU ORDER BY PLAT_PRINCIPALE ASC");
 
-    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ENTRÉE"));
-    model->setHeaderData(1, Qt::Horizontal, QObject::tr("PLAT_PRINCIPALE"));
-    model->setHeaderData(2, Qt::Horizontal, QObject::tr("DESSERT"));
-    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Jour"));
-    model->setHeaderData(4, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("ENTRÉE"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("PLAT_PRINCIPALE"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("DESSERT"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Jour"));
 
     return model;
 }
@@ -125,11 +125,24 @@ QSqlQueryModel * food::trier_jour()
     QSqlQueryModel * model= new QSqlQueryModel();
     model->setQuery("SELECT * FROM MENU ORDER BY Jour ASC");
 
-    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ENTRÉE"));
-    model->setHeaderData(1, Qt::Horizontal, QObject::tr("PLAT_PRINCIPALE"));
-    model->setHeaderData(2, Qt::Horizontal, QObject::tr("DESSERT"));
-    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Jour"));
-    model->setHeaderData(4, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("ENTRÉE"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("PLAT_PRINCIPALE"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("DESSERT"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Jour"));
 
+    return model;
+}
+
+QSqlQueryModel *food::chercher(const QString &c)
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+    model->setQuery("select * from MENU where JOUR LIKE '"+c+"%'");
+
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("ENTRÉE"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("PLAT_PRINCIPALE"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("DESSERT"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Jour"));
     return model;
 }

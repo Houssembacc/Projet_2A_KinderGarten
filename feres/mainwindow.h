@@ -133,6 +133,44 @@ private slots:
 
     void on_pb_affficher_5_clicked();
 
+    void on_pushButton_8_clicked();
+
+    void on_lineEdit_chercher_stock_textChanged(const QString &arg1);
+
+    void on_lineEdit_rechercher_ID_4_selectionChanged();
+
+    void on_lineEdit_chercher_menu_textChanged(const QString &arg1);
+
+    void on_pb_affficher_6_clicked();
+
+    void on_id_label_1_cursorPositionChanged(int arg1, int arg2);
+
+    void on_ID_label_2_cursorPositionChanged(int arg1, int arg2);
+
+    void on_id_stock_supprimer_cursorPositionChanged(int arg1, int arg2);
+
+    void on_ID_label_3_cursorPositionChanged(int arg1, int arg2);
+
+    void on_id_label_2_cursorPositionChanged(int arg1, int arg2);
+
+    void on_entree_label_cursorPositionChanged(int arg1, int arg2);
+
+    void on_dessert_label_cursorPositionChanged(int arg1, int arg2);
+
+    void on_tab_modifier_menu_activated(const QModelIndex &index);
+
+    void on_tab_modifier_clicked(const QModelIndex &index);
+
+    void on_tab_menu_supp_activated(const QModelIndex &index);
+
+    void on_tab_menu_supp_2_activated(const QModelIndex &index);
+
+    void on_tab_aliment_supp_activated(const QModelIndex &index);
+
+    void on_tab_modifier_menu_2_activated(const QModelIndex &index);
+
+    void on_tab_modifier_stock_activated(const QModelIndex &index);
+
 private:
     Ui::MainWindow *ui;
     Eleve tmpetudiant;
