@@ -44,6 +44,15 @@ query.bindValue(":sexe", sexe);
 
 return    query.exec();
 }
+QSqlQueryModel * Eleve::afficher_affectation()
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+
+    model->setQuery("select TYPE, count(ID) from TABLE1 tb JOIN CLASSES cl ON tb.REF_CLASSE_FK=cl.REFERENCE GROUP BY REFERENCE");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("TYPE"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Nombre d'eleves"));
+}
+
 QSqlQueryModel * Eleve::afficher()
 {QSqlQueryModel * model= new QSqlQueryModel();
 

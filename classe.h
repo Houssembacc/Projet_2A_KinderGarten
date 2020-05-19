@@ -8,7 +8,7 @@ class classe
 {
 public:
     classe();
-    classe(int,QString); // constructeur parametré
+    classe(int,QString,int); // constructeur parametré
     QString get_type();
     int get_ref();
     bool ajouter_classe(); // ajouter un etudiant
@@ -20,7 +20,7 @@ public:
     QSqlQueryModel *recherchertype(const QString &);
 private: // les attributs
     QString type;
-    int ref;
+    int ref,fk_emplois;
 };
 
 #endif // CLASSE_H

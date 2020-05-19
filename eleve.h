@@ -17,6 +17,7 @@ public:
     int get_reference();
     bool ajouter(); // ajouter un etudiant
     QSqlQueryModel * afficher(); // afficher l'etudiant ...
+    QSqlQueryModel * afficher_affectation();
     bool supprimer(int); // supprimer l'etudiant ...
     bool update();
     QSqlQueryModel * trier_nom();
