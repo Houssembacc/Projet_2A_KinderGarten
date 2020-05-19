@@ -145,7 +145,7 @@ QSqlQueryModel * batiment::Find_batiment(QString id)
 {
     QSqlQueryModel * model = new QSqlQueryModel();
     QSqlQuery query;
-    query.prepare("SELECT ID_BATIMENT,NOM_BATIMENT,NBR_ETAGE,* FROM batiments WHERE ID_BATIMENT='"+id+"'");
+    query.prepare("SELECT ID_BATIMENT,NOM_BATIMENT,NBR_ETAGE FROM batiments WHERE ID_BATIMENT='"+id+"'");
     query.bindValue(0,id);
     query.exec();
     model->setQuery(query);

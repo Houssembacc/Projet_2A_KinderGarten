@@ -27,6 +27,7 @@ public:
     QSqlQueryModel* trier_idbatasc();
     QSqlQueryModel* trier_idbatdesc();
     QSqlQueryModel *rechercherparnom2(const QString &);
+    QSqlQueryModel *Find_salle(QString );
    private:
     int idsalle,etage,idbat,nbeleve,fk_classe,fk_employe;
     QString nomsalle,etat;

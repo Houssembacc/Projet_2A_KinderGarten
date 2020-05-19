@@ -197,3 +197,13 @@ QSqlQueryModel *salle::rechercherparnom2(const QString &c)
 
 
 }
+QSqlQueryModel *salle::Find_salle(QString id)
+{
+    QSqlQueryModel * model = new QSqlQueryModel();
+    QSqlQuery query;
+    query.prepare("SELECT  ID_SALLE,NOM_SALLE,NUM_ETAGE,REF_CLASSE_FK,ID_EMPLOYE_FK,ID_BATIMENT_FK,ETAT,NBELEVE FROM salles WHERE ID_SALLE='"+id+"'");
+    query.bindValue(0,id);
+    query.exec();
+    model->setQuery(query);
+    return model;
+}
