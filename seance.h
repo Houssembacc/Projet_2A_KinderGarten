@@ -19,7 +19,12 @@ public:
     QSqlQueryModel *  afficher();
     bool supprimer(int);
     bool modifier();
-
+    QSqlQueryModel* trier_matiereasc();
+    QSqlQueryModel* trier_matieredsc();
+    QSqlQueryModel* trier_idasc();
+    QSqlQueryModel* trier_iddesc();
+    QSqlQueryModel *rechercherparmatiere(const QString &);
+    QSqlQueryModel *Find_seance(QString );
 };
 
 #endif // SEANCE_H

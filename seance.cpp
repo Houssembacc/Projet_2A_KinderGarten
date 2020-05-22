@@ -60,3 +60,63 @@ query.bindValue(":idsalle",id_salle);
 return    query.exec();
 }
 
+QSqlQueryModel *seance::trier_matiereasc()
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+    model->setQuery("SELECT * FROM SEANCES ORDER BY MATIERE ASC");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Matière"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("ID_SALLE"));
+    return model;
+}
+QSqlQueryModel *seance::trier_matieredsc()
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+    model->setQuery("SELECT * FROM SEANCES ORDER BY MATIERE DESC");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Matière"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("ID_SALLE"));
+    return model;
+}
+QSqlQueryModel *seance::trier_idasc()
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+    model->setQuery("SELECT * FROM SEANCES ORDER BY ID_SEANCE ASC");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Matière"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("ID_SALLE"));
+    return model;
+}
+QSqlQueryModel *seance::trier_iddesc()
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+    model->setQuery("SELECT * FROM SEANCES ORDER BY ID_SEANCE DESC");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Matière"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("ID_SALLE"));
+    return model;
+}
+QSqlQueryModel *seance::rechercherparmatiere(const QString &c)
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+    model->setQuery("select * from SEANCES where (MATIERE LIKE '"+c+"%')");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("etage"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Nom"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("ID_bat"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("état"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("nb élève"));
+    return model;
+
+
+}
+QSqlQueryModel *seance::Find_seance(QString id)
+{
+    QSqlQueryModel * model = new QSqlQueryModel();
+    QSqlQuery query;
+    query.prepare("SELECT  ID_SEANCE,MATIERE,ID_SALLE FROM seances WHERE ID_SEANCE='"+id+"'");
+    query.bindValue(0,id);
+    query.exec();
+    model->setQuery(query);
+    return model;
+}
