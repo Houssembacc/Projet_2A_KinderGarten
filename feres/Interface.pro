@@ -29,7 +29,8 @@ SOURCES += \
     food.cpp \
     main.cpp \
     mainwindow.cpp \
-    stock.cpp
+    stock.cpp \
+    transport.cpp
 HEADERS += \
     SMTPClient/email.h \
     SMTPClient/emailaddress.h \
@@ -39,7 +40,8 @@ HEADERS += \
     eleve.h \
     food.h \
     mainwindow.h \
-    stock.h
+    stock.h \
+    transport.h
 
 FORMS += \
     mainwindow.ui

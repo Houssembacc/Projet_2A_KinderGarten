@@ -4,6 +4,7 @@
 #include "classe.h"
 #include "food.h"
 #include "stock.h"
+#include "transport.h"
 #include <QMainWindow>
 #include <QPainter>
 #include <QMediaPlayer>
@@ -26,7 +27,6 @@ public:
 private slots:
     void sendEmail();
 
-    void clearFields();
 
     void onStatus(Status::e status, QString errorMessage);
 
@@ -38,11 +38,7 @@ private slots:
 
     void on_pb_modifier_eleve_clicked();
 
-    void on_tab_widget_currentChanged();
-
     void on_tab_modifier_activated(const QModelIndex &index);
-
-    void on_tab_widget_currentChanged(int index);
 
     void on_tab_widget_tabBarClicked();
 
@@ -51,8 +47,6 @@ private slots:
     void on_lineEdit_rechercher_ID_textChanged(const QString &arg1);
 
     void on_pushButton_2_clicked();
-
-    void on_envoyer_mail_clicked();
 
     void on_ID_label_cursorPositionChanged();
 
@@ -95,13 +89,9 @@ private slots:
 
     void on_trier_classe_clicked();
 
-    void on_lineEdit_rechercher_type_classe_cursorPositionChanged(int arg1, int arg2);
-
     void on_lineEdit_rechercher_type_classe_textChanged(const QString &arg1);
 
     void on_stat_currentChanged(int index);
-
-    void on_stat_tabBarClicked(int index);
 
     void on_pb_imprimer_clicked();
 
@@ -116,10 +106,6 @@ private slots:
     void on_menu_supprimer_clicked();
 
     void on_ajouter_clicked();
-
-    void on_tabWidget_6_currentChanged(int index);
-
-    void on_menu_supprimer_2_clicked();
 
     void on_aliment_supprimer_clicked();
 
@@ -136,8 +122,6 @@ private slots:
     void on_pushButton_8_clicked();
 
     void on_lineEdit_chercher_stock_textChanged(const QString &arg1);
-
-    void on_lineEdit_rechercher_ID_4_selectionChanged();
 
     void on_lineEdit_chercher_menu_textChanged(const QString &arg1);
 
@@ -159,20 +143,41 @@ private slots:
 
     void on_tab_modifier_menu_activated(const QModelIndex &index);
 
-    void on_tab_modifier_clicked(const QModelIndex &index);
-
     void on_tab_menu_supp_activated(const QModelIndex &index);
-
-    void on_tab_menu_supp_2_activated(const QModelIndex &index);
 
     void on_tab_aliment_supp_activated(const QModelIndex &index);
 
-    void on_tab_modifier_menu_2_activated(const QModelIndex &index);
-
     void on_tab_modifier_stock_activated(const QModelIndex &index);
+
+    void on_tablestock_activated(const QModelIndex &index);
+
+    void on_imprimer_clicked();
+
+    void on_tablemenu_activated(const QModelIndex &index);
+
+    void on_imprimer_2_clicked();
+
+    void on_tabWidget_tabBarClicked(int index);
+
+    void on_G_transport_clicked();
+
+    void on_pushButton_9_clicked();
+
+    void on_pushButton_modifier_3_clicked();
+
+    void on_bus_supprimer_clicked();
+
+    void on_tab_bus_supp_activated(const QModelIndex &index);
+
+    void on_tab_modifier_bus_activated(const QModelIndex &index);
+
+    void on_pushButton_modifier_nus_clicked();
+
+    void on_pushButton_modifier_bus_clicked();
 
 private:
     Ui::MainWindow *ui;
+    TRANSPORT tmptransport;
     Eleve tmpetudiant;
     classe tmpclasse;
     food tmpfood;
